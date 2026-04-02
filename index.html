@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoría Gastronómica - Chef Mauricio Marín</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Roboto', sans-serif; background-color: #f8f9fa; color: #333; }
+       .header-brand { background: #1a1a1a; color: white; padding: 2rem 0; text-align: center; margin-bottom: 2rem; border-bottom: 4px solid #c9a050; }
+       .header-brand h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; }
+       .section-card { background: white; border-radius: 10px; border: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 1.5rem; }
+       .card-header { background: #fdfdfd; border-bottom: 1px solid #eee; font-weight: bold; color: #c9a050; }
+       .risk-high { color: #dc3545; font-weight: bold; }
+       .risk-med { color: #fd7e14; }
+       .risk-low { color: #6c757d; }
+        #score-box { position: sticky; top: 20px; z-index: 100; background: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); text-align: center; border-left: 5px solid #c9a050; }
+       .score-value { font-size: 3rem; font-weight: bold; color: #1a1a1a; }
+       .btn-export { background: #c9a050; color: white; border: none; padding: 12px 30px; font-weight: bold; width: 100%; transition: 0.3s; }
+       .btn-export:hover { background: #a88540; color: white; }
+    </style>
+</head>
+<body>
+
+<div class="header-brand">
+    <h1>CHEF MAURICIO MARÍN</h1>
+    <p class="mb-0 text-uppercase tracking-widest">Consultoría de Alta Gerencia Gastronómica</p>
+</div>
+
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <form id="auditForm">
+                <div class="card section-card p-4">
+                    <h4 class="mb-3">Datos del Establecimiento</h4>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Nombre del Restaurante</label>
+                            <input type="text" id="restName" class="form-control" placeholder="Ej. La Boheme">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Fecha de Auditoría</label>
+                            <input type="date" id="auditDate" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card section-card">
+                    <div class="card-header">1. SEGURIDAD ALIMENTARIA E HIGIENE</div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="risk-high"></span> Control de temperaturas (Neveras < 5°C / Congelación < -18°C)
+                            </div>
+                            <input type="checkbox" class="form-check-input audit-item" data-penalty="10">
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="risk-high"></span> Ausencia de contaminación cruzada (Tablas diferenciadas)
+                            </div>
+                            <input type="checkbox" class="form-check-input audit-item" data-penalty="10">
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="risk-med"></span> Etiquetado y fechas de caducidad (Método FIFO)
+                            </div>
+                            <input type="checkbox" class="form-check-input audit-item" data-penalty="5">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card section-card">
+                    <div class="card-header">2. INGENIERÍA DE MENÚ Y COSTOS</div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="risk-med"></span> Existencia de Escandallos técnicos actualizados
+                            </div>
+                            <input type="checkbox" class="form-check-input audit-item" data-penalty="5">
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="risk-low"></span> Registro diario de mermas y desperdicios
+                            </div>
+                            <input type="checkbox" class="form-check-input audit-item" data-penalty="2">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card section-card">
+                    <div class="card-header">3. GESTIÓN OPERATIVA Y PERSONAL</div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="risk-med"></span> Briefing previo al servicio con el equipo
+                            </div>
+                            <input type="checkbox" class="form-check-input audit-item" data-penalty="5">
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="risk-low"></span> Uniformidad e higiene del personal
+                            </div>
+                            <input type="checkbox" class="form-check-input audit-item" data-penalty="2">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-lg-4">
+            <div id="score-box">
+                <h5>Puntaje de Auditoría</h5>
+                <div class="score-value" id="finalScore">100</div>
+                <p id="gradeText" class="fw-bold text-success">Calificación: A (Excelente)</p>
+                <hr>
+                <p class="small text-muted">Las casillas marcadas representan <b>INCUMPLIMIENTOS</b> detectados.</p>
+                <button class="btn btn-export" onclick="exportPDF()">DESCARGAR REPORTE PDF</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    const form = document.getElementById('auditForm');
+    const scoreDisplay = document.getElementById('finalScore');
+    const gradeText = document.getElementById('gradeText');
+
+    form.addEventListener('change', () => {
+        let score = 100;
+        document.querySelectorAll('.audit-item:checked').forEach(item => {
+            score -= parseInt(item.getAttribute('data-penalty'));
+        });
+        
+        scoreDisplay.innerText = score;
+
+        if(score >= 90) {
+            gradeText.innerText = "Calificación: A (Excelente)";
+            gradeText.className = "fw-bold text-success";
+        } else if(score >= 75) {
+            gradeText.innerText = "Calificación: B (Favorable)";
+            gradeText.className = "fw-bold text-warning";
+        } else {
+            gradeText.innerText = "Calificación: C (Intervención Urgente)";
+            gradeText.className = "fw-bold text-danger";
+        }
+    });
+
+    async function exportPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        const rName = document.getElementById('restName').value |
+
+| "Restaurante Sin Nombre";
+        const rScore = scoreDisplay.innerText;
+        const rGrade = gradeText.innerText;
+
+        doc.setFontSize(22);
+        doc.setTextColor(201, 160, 80);
+        doc.text("CHEF MAURICIO MARIN", 20, 20);
+        
+        doc.setFontSize(16);
+        doc.setTextColor(0, 0, 0);
+        doc.text("Informe de Auditoría Previa", 20, 30);
+        
+        doc.setFontSize(12);
+        doc.text(`Establecimiento: ${rName}`, 20, 45);
+        doc.text(`Fecha: ${document.getElementById('auditDate').value}`, 20, 52);
+        doc.text(`Resultado Final: ${rScore}/100`, 20, 59);
+        doc.text(rGrade, 20, 66);
+
+        doc.text("___________________________________________________", 20, 75);
+        doc.text("Observaciones de Incumplimiento:", 20, 85);
+        
+        let y = 95;
+        document.querySelectorAll('.audit-item:checked').forEach(item => {
+            const text = item.parentElement.innerText.trim();
+            doc.text(`- ${text}`, 20, y);
+            y += 7;
+        });
+
+        doc.save(`Auditoria_${rName}.pdf`);
+    }
+</script>
+</body>
+</html>

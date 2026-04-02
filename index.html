@@ -14,7 +14,7 @@ body{font-family:Arial;background:#f4f4f4;margin:0;padding:10px}
 .score{font-size:60px;text-align:center;font-weight:bold}
 .item{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee}
 button{width:100%;padding:12px;margin-top:5px;font-weight:bold}
-.badge{padding:8px;border-radius:5px;color:#fff;text-align:center}
+.badge{padding:10px;border-radius:8px;color:#fff;text-align:center}
 .ok{background:green}
 .mid{background:orange}
 .bad{background:red}
@@ -38,9 +38,8 @@ button{width:100%;padding:12px;margin-top:5px;font-weight:bold}
 <input id="fecha" type="date" style="width:100%;padding:8px">
 </div>
 
-<form id="form">
+<form>
 
-<!-- 1 -->
 <div class="box">
 <h4>1. Imagen</h4>
 <div class="item"><span>Fachada sucia</span><input type="checkbox" class="chk" data-pts="5" data-label="Fachada sucia"></div>
@@ -48,7 +47,6 @@ button{width:100%;padding:12px;margin-top:5px;font-weight:bold}
 <div class="item"><span>Baños en mal estado</span><input type="checkbox" class="chk" data-pts="10" data-label="Baños en mal estado"></div>
 </div>
 
-<!-- 2 -->
 <div class="box">
 <h4>2. Cocina</h4>
 <div class="item"><span>Grasa en campanas</span><input type="checkbox" class="chk" data-pts="10" data-label="Grasa en campanas"></div>
@@ -56,7 +54,6 @@ button{width:100%;padding:12px;margin-top:5px;font-weight:bold}
 <div class="item"><span>Lavamanos sin insumos</span><input type="checkbox" class="chk" data-pts="10" data-label="Lavamanos sin insumos"></div>
 </div>
 
-<!-- 3 -->
 <div class="box">
 <h4>3. Seguridad Alimentaria</h4>
 <div class="item"><span>Temperaturas incorrectas</span><input type="checkbox" class="chk" data-pts="15" data-label="Temperaturas incorrectas"></div>
@@ -64,29 +61,66 @@ button{width:100%;padding:12px;margin-top:5px;font-weight:bold}
 <div class="item"><span>Productos vencidos</span><input type="checkbox" class="chk" data-pts="10" data-label="Productos vencidos"></div>
 </div>
 
-<!-- 4 -->
 <div class="box">
 <h4>4. Servicio</h4>
 <div class="item"><span>Demora en pedidos</span><input type="checkbox" class="chk" data-pts="10" data-label="Demora en pedidos"></div>
 <div class="item"><span>No hay ventas sugeridas</span><input type="checkbox" class="chk" data-pts="5" data-label="No hay upselling"></div>
 </div>
 
-<!-- 5 -->
 <div class="box">
 <h4>5. Personal</h4>
 <div class="item"><span>Sin uniforme</span><input type="checkbox" class="chk" data-pts="5" data-label="Sin uniforme"></div>
 <div class="item"><span>Sin briefing</span><input type="checkbox" class="chk" data-pts="5" data-label="Sin briefing"></div>
 </div>
 
-<!-- 6 -->
 <div class="box">
 <h4>6. Seguridad</h4>
 <div class="item"><span>Extintores vencidos</span><input type="checkbox" class="chk" data-pts="10" data-label="Extintores vencidos"></div>
 <div class="item"><span>Botiquín incompleto</span><input type="checkbox" class="chk" data-pts="5" data-label="Botiquín incompleto"></div>
 </div>
 
-<!-- 7 -->
 <div class="box">
 <h4>7. Finanzas</h4>
 <div class="item"><span>Sin escandallos</span><input type="checkbox" class="chk" data-pts="15" data-label="Sin escandallos"></div>
-<div class="item"><span>Sin control de m
+<div class="item"><span>Sin control de mermas</span><input type="checkbox" class="chk" data-pts="10" data-label="Sin control de mermas"></div>
+</div>
+
+<div class="box">
+<h4>8. Documentación</h4>
+<div class="item"><span>Sin registros</span><input type="checkbox" class="chk" data-pts="5" data-label="Sin registros"></div>
+<div class="item"><span>Datos mal protegidos</span><input type="checkbox" class="chk" data-pts="5" data-label="Datos mal protegidos"></div>
+</div>
+
+</form>
+
+<div class="box">
+<button onclick="pdf()">PDF</button>
+<button onclick="excel()">EXCEL</button>
+<button onclick="wa()">WHATSAPP</button>
+</div>
+
+<script>
+
+const checks=document.querySelectorAll(".chk");
+const score=document.getElementById("score");
+const estado=document.getElementById("estado");
+
+function calc(){
+let total=100;
+
+checks.forEach(c=>{
+if(c.checked) total-=parseInt(c.dataset.pts);
+});
+
+if(total<0) total=0;
+
+score.innerText=total;
+
+if(total>=90){
+estado.innerText="EXCELENTE";
+estado.className="badge ok";
+}else if(total>=75){
+estado.innerText="MEJORAR";
+estado.className="badge mid";
+}else{
+estado.innerText="CR
